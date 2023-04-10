@@ -3,7 +3,7 @@ import { axiosInstance } from ".././utilities/axiosInstance";
 export const generateSchedule = async (values) => {
   console.log(values);
   let response = await axiosInstance.post(
-    "/api/scheduleCalendar/generateSchedule",
+    "/scheduleCalendar/generateSchedule",
     values
   );
   return response.data;
@@ -11,7 +11,7 @@ export const generateSchedule = async (values) => {
 
 export const getSchedule = async (values) => {
   console.log(values);
-  let response = await axiosInstance.get("/api/scheduleCalendar/getSchedule", {
+  let response = await axiosInstance.get("/scheduleCalendar/getSchedule", {
     params: {
       enrollDate: values.enrollDate,
       hoursWillingToCommit: values.hoursWillingToCommit,
