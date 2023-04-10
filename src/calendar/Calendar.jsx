@@ -67,12 +67,12 @@ function CalendarPage() {
   ]);
 
   return (
-    <div className="calendarContainer bg-bgLight  flex items-center justify-center ">
+    <div className="calendarContainer bg-bgLight  flex items-center justify-center min-h-screen ">
       {spinner ? (
         <BarLoader color="white" />
       ) : (
-        <div className="w-7/12 mt-5 mb-5">
-          <div className="text-center text-white md:text-2xl md:font-medium mb-5">
+        <div className="w-10/12  mb-5">
+          <div className="text-center text-white md:text-2xl md:font-medium mt-2 mb-2">
             Course Schedule
           </div>
           <Calendar

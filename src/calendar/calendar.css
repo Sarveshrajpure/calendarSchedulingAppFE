@@ -34,8 +34,7 @@
   font-weight: 600;
 }
 .rbc-overlay {
-  position: absolute !important;
-  top: 10% !important;
-  height: 500px !important;
-  overflow: scroll !important;
+  height: 20rem !important;
+  overflow: hidden !important;
+  overflow-y: scroll !important;
 }
