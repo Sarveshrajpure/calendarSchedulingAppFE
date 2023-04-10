@@ -64,6 +64,7 @@ function CalendarPage() {
           defaultView={"month"}
           views={["month"]}
           events={events}
+          popup
         />
       </div>
     </div>
