@@ -6,11 +6,16 @@ import { getSchedule } from "../actions/calendarActions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./calendar.css";
 import BarLoader from "react-spinners/BarLoader";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
 
 function CalendarPage() {
   const location = useLocation();
   const [events, setEvents] = useState([]);
+  const [todaysEvents, setTodaysEvents] = useState([]);
   const [spinner, setSpinner] = useState(false);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
   moment.locale("ko", {
     week: {
       dow: 1,
@@ -18,6 +23,12 @@ function CalendarPage() {
     },
   });
   const localizer = momentLocalizer(moment);
+
+  const onShowMore = (events, date) => {
+    setTodaysEvents(events);
+    console.log(todaysEvents);
+    setIsOpen(true);
+  };
 
   const formatDate = (date) => {
     var d = new Date(date),
@@ -43,7 +54,6 @@ function CalendarPage() {
 
         setEvents(response.schedule);
         setSpinner(false);
-
       } catch (error) {
         console.log(error);
         setSpinner(false);
@@ -57,11 +67,11 @@ function CalendarPage() {
   ]);
 
   return (
-    <div className="calendarContainer bg-bgDark   flex items-center justify-center h-screen">
+    <div className="calendarContainer bg-bgLight  flex items-center justify-center ">
       {spinner ? (
         <BarLoader color="white" />
       ) : (
-        <div className="w-10/12 mt-5 mb-5">
+        <div className="w-7/12 mt-5 mb-5">
           <div className="text-center text-white md:text-2xl md:font-medium mb-5">
             Course Schedule
           </div>
@@ -70,7 +80,7 @@ function CalendarPage() {
             defaultDate={new Date()}
             startAccessor="start"
             endAccessor="end"
-            style={{ height: 673 }}
+            style={{ height: 657 }}
             defaultView={"month"}
             views={["month"]}
             events={events}

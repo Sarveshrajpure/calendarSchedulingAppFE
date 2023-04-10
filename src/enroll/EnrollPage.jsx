@@ -20,7 +20,7 @@ function EnrollPage() {
   const enroll = async () => {
     try {
       setError("");
-      if (hoursSelected === null && course === null) {
+      if (hoursSelected === "" || course === "") {
         setError("Please select course and hours");
       } else {
         let dataToBeSent = {

@@ -5,7 +5,7 @@ import CalendarPage from "./calendar/Calendar";
 
 function App() {
   return (
-    <div className="App ">
+    <div className="App  ">
       <Routes>
         <Route path="/" element={<EnrollPage />}></Route>
         <Route path="/calendar" element={<CalendarPage />}></Route>

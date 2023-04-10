@@ -33,3 +33,9 @@
   font-size: 120%;
   font-weight: 600;
 }
+.rbc-overlay {
+  position: absolute !important;
+  top: 10% !important;
+  height: 500px !important;
+  overflow: scroll !important;
+}
