@@ -5,10 +5,12 @@ import moment from "moment";
 import { getSchedule } from "../actions/calendarActions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./calendar.css";
+import BarLoader from "react-spinners/BarLoader";
 
 function CalendarPage() {
   const location = useLocation();
   const [events, setEvents] = useState([]);
+  const [spinner, setSpinner] = useState(false);
   moment.locale("ko", {
     week: {
       dow: 1,
@@ -32,6 +34,7 @@ function CalendarPage() {
   useEffect(() => {
     const getCalendarSchedule = async () => {
       try {
+        setSpinner(true);
         let response = await getSchedule({
           course: location.state.course,
           enrollDate: formatDate(location.state.enrollDate),
@@ -39,10 +42,11 @@ function CalendarPage() {
         });
 
         setEvents(response.schedule);
+        setSpinner(false);
 
-      
       } catch (error) {
         console.log(error);
+        setSpinner(false);
       }
     };
     getCalendarSchedule();
@@ -54,19 +58,26 @@ function CalendarPage() {
 
   return (
     <div className="calendarContainer bg-bgDark   flex items-center justify-center h-screen">
-      <div className="w-10/12 mt-5 mb-5">
-        <Calendar
-          localizer={localizer}
-          defaultDate={new Date()}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 673 }}
-          defaultView={"month"}
-          views={["month"]}
-          events={events}
-          popup
-        />
-      </div>
+      {spinner ? (
+        <BarLoader color="white" />
+      ) : (
+        <div className="w-10/12 mt-5 mb-5">
+          <div className="text-center text-white md:text-2xl md:font-medium mb-5">
+            Course Schedule
+          </div>
+          <Calendar
+            localizer={localizer}
+            defaultDate={new Date()}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 673 }}
+            defaultView={"month"}
+            views={["month"]}
+            events={events}
+            popup
+          />
+        </div>
+      )}
     </div>
   );
 }
