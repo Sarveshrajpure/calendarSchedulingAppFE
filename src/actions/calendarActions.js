@@ -1,8 +1,8 @@
-import axios from "axios";
+import { axiosInstance } from ".././utilities/axiosInstance";
 
 export const generateSchedule = async (values) => {
   console.log(values);
-  let response = await axios.post(
+  let response = await axiosInstance.post(
     "/api/scheduleCalendar/generateSchedule",
     values
   );
@@ -11,7 +11,7 @@ export const generateSchedule = async (values) => {
 
 export const getSchedule = async (values) => {
   console.log(values);
-  let response = await axios.get("/api/scheduleCalendar/getSchedule", {
+  let response = await axiosInstance.get("/api/scheduleCalendar/getSchedule", {
     params: {
       enrollDate: values.enrollDate,
       hoursWillingToCommit: values.hoursWillingToCommit,
