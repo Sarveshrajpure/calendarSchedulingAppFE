@@ -40,7 +40,7 @@ function CalendarPage() {
 
         setEvents(response.schedule);
 
-        console.log(response.schedule);
+      
       } catch (error) {
         console.log(error);
       }
