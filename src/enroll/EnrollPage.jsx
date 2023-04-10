@@ -19,6 +19,7 @@ function EnrollPage() {
 
   const enroll = async () => {
     try {
+      setError("");
       if (hoursSelected === null && course === null) {
         setError("Please select course and hours");
       } else {
@@ -41,6 +42,7 @@ function EnrollPage() {
       }
     } catch (error) {
       setSpinner(false);
+      setError("Something went wrong");
       console.log(error);
     }
   };
