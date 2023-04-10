@@ -1,0 +1,69 @@
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Calendar, Views, momentLocalizer } from "react-big-calendar";
+import moment, { months } from "moment";
+import { getSchedule } from "../actions/calendarActions";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./calendar.css";
+
+function CalendarPage() {
+  const location = useLocation();
+  const [events, setEvents] = useState([]);
+  moment.locale("ko", {
+    week: {
+      dow: 1,
+      doy: 1,
+    },
+  });
+  const localizer = momentLocalizer(moment);
+
+  const formatDate = (date) => {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  };
+
+  useEffect(() => {
+    const getCalendarSchedule = async () => {
+      try {
+        let response = await getSchedule({
+          course: "Java",
+          enrollDate: formatDate(location.state.enrollDate),
+          hoursWillingToCommit: location.state.hoursWillingToCommit,
+        });
+
+        setEvents(response.schedule);
+
+        console.log(response.schedule);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCalendarSchedule();
+  }, []);
+
+  return (
+    <div className="calendarContainer bg-bgDark   flex items-center justify-center h-screen">
+      <div className="w-10/12 mt-5 mb-5">
+        <Calendar
+          localizer={localizer}
+          defaultDate={new Date()}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 673 }}
+          defaultView={"month"}
+          views={["month"]}
+          events={events}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default CalendarPage;
