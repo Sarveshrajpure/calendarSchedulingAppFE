@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Calendar, Views, momentLocalizer } from "react-big-calendar";
-import moment, { months } from "moment";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
 import { getSchedule } from "../actions/calendarActions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./calendar.css";
@@ -33,7 +33,7 @@ function CalendarPage() {
     const getCalendarSchedule = async () => {
       try {
         let response = await getSchedule({
-          course: "Java",
+          course: location.state.course,
           enrollDate: formatDate(location.state.enrollDate),
           hoursWillingToCommit: location.state.hoursWillingToCommit,
         });
@@ -46,7 +46,11 @@ function CalendarPage() {
       }
     };
     getCalendarSchedule();
-  }, []);
+  }, [
+    location.state.course,
+    location.state.enrollDate,
+    location.state.hoursWillingToCommit,
+  ]);
 
   return (
     <div className="calendarContainer bg-bgDark   flex items-center justify-center h-screen">

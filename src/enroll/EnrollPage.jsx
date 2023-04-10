@@ -13,23 +13,29 @@ function EnrollPage() {
     setHoursSelected(value);
   };
 
+  const handleChangeCourse = (value) => {
+    setCourse(value);
+  };
+
   const enroll = async () => {
     try {
-      if (hoursSelected === "" && course === "") {
+      if (hoursSelected === null && course === null) {
         setError("Please select course and hours");
       } else {
         let dataToBeSent = {
-          course: "java",
+          course: course,
           enrollDate: new Date(),
           hoursWillingToCommit: hoursSelected,
         };
         setSpinner(true);
+        // eslint-disable-next-line no-unused-vars
         let response = await generateSchedule(dataToBeSent);
         setSpinner(false);
         navigate("/calendar", {
           state: {
             enrollDate: dataToBeSent.enrollDate,
             hoursWillingToCommit: dataToBeSent.hoursWillingToCommit,
+            course: course,
           },
         });
       }
@@ -45,9 +51,16 @@ function EnrollPage() {
           Welcome <p className="text-lg font-normal ">Lets start learning</p>
         </div>
         <div className="formSelect flex flex-col md:flex-row md:justify-evenly mt-14 p-4 md:p-0">
-          <select className="md:p-1 mb-5 md:mb-0 border-2 border-bgDark rounded-md cursor-pointer">
-            <option defaultChecked>Select a course</option>
-            <option>Java</option>
+          <select
+            className="md:p-1 mb-5 md:mb-0 border-2 border-bgDark rounded-md cursor-pointer"
+            onInput={(e) => {
+              handleChangeCourse(e.target.value);
+            }}
+          >
+            <option defaultChecked value={null}>
+              Select a course
+            </option>
+            <option value="java">Java</option>
           </select>
           <select
             className="md:p-1 border-2 border-bgDark rounded-md cursor-pointer"
